@@ -1,0 +1,11 @@
+<h3>Escolha o seu time</h3>
+
+<%= form_for @user do |f| %>
+  <%= f.label :team %>:
+  <%= collection_select(:user, :team_id, Team.all, :id, :name, prompt: false) %><br />
+
+  <%= f.label :email %>:
+  <%= f.text_field :email %><br />
+
+  <%= f.submit %>
+<% end %>

@@ -4,6 +4,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :omniauthable, omniauth_providers: [:twitter]
 
+  belongs_to :team
+  has_one :identity
+
   # def self.from_omniauth(auth)
   #   where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
   #     user.provider = auth.provider
@@ -19,6 +22,10 @@ class User < ApplicationRecord
 
   def twitter_client
     @twitter_client ||= Twitter.client( access_token: twitter.accesstoken )
+  end
+
+  def handle
+    identity.nickname
   end
 
 end

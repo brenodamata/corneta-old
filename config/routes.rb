@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
-  devise_for :users, :controllers => { omniauth_callbacks: 'omniauth_callbacks', registrations: 'registrations' }
-  # devise_for :users, class_name: "FromUser"
+  devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks',
+                                    registrations: 'registrations' }
+
+  resources :users do
+    get 'new_account', on: :member
+    get :show, on: :member
+  end
+
   resources :teams
   root to: 'pages#main'
 end

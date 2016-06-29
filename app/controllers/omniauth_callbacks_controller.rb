@@ -13,9 +13,11 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @identity = Identity.find_for_oauth env["omniauth.auth"]
 
     @user = @identity.user || current_user
+
     if @user.nil?
-      @user = User.create( email: @identity.email || "" )
+      @user = User.create_new( email: @identity.email || "" )
       @identity.update_attribute( :user_id, @user.id )
+      redirect_to new_account_user_path(@user)
     end
 
     if @user.email.blank? && @identity.email
